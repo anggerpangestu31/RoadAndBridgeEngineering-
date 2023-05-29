@@ -1,0 +1,3658 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/Kabupaten_Pringsewu_1.js"></script>
+        <script src="data/Kecamatan_Pringsewu_2.js"></script>
+        <script src="data/Jalan_3.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-5.417183880428946,104.88208403156668],[-5.307065412885556,105.05239113820966]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data ©2015 Google</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        function pop_Kabupaten_Pringsewu_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KABUPATEN'] !== null ? autolinker.link(feature.properties['KABUPATEN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Hectares'] !== null ? autolinker.link(feature.properties['Hectares'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Kabupaten_Pringsewu_1_0() {
+            return {
+                pane: 'pane_Kabupaten_Pringsewu_1',
+                opacity: 1,
+                color: 'rgba(46,150,77,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(55,255,0,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Kabupaten_Pringsewu_1');
+        map.getPane('pane_Kabupaten_Pringsewu_1').style.zIndex = 401;
+        map.getPane('pane_Kabupaten_Pringsewu_1').style['mix-blend-mode'] = 'normal';
+        var layer_Kabupaten_Pringsewu_1 = new L.geoJson(json_Kabupaten_Pringsewu_1, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Kabupaten_Pringsewu_1',
+            layerName: 'layer_Kabupaten_Pringsewu_1',
+            pane: 'pane_Kabupaten_Pringsewu_1',
+            onEachFeature: pop_Kabupaten_Pringsewu_1,
+            style: style_Kabupaten_Pringsewu_1_0,
+        });
+        bounds_group.addLayer(layer_Kabupaten_Pringsewu_1);
+        map.addLayer(layer_Kabupaten_Pringsewu_1);
+        function pop_Kecamatan_Pringsewu_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">DESA</th>\
+                        <td>' + (feature.properties['DESA'] !== null ? autolinker.link(feature.properties['DESA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KECAMATAN</th>\
+                        <td>' + (feature.properties['KECAMATAN'] !== null ? autolinker.link(feature.properties['KECAMATAN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KABUPATEN'] !== null ? autolinker.link(feature.properties['KABUPATEN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUMBER'] !== null ? autolinker.link(feature.properties['SUMBER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Leng'] !== null ? autolinker.link(feature.properties['Shape_Leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? autolinker.link(feature.properties['Shape_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Kecamatan_Pringsewu_2_0() {
+            return {
+                pane: 'pane_Kecamatan_Pringsewu_2',
+                opacity: 1,
+                color: 'rgba(227,26,28,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,210,72,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Kecamatan_Pringsewu_2');
+        map.getPane('pane_Kecamatan_Pringsewu_2').style.zIndex = 402;
+        map.getPane('pane_Kecamatan_Pringsewu_2').style['mix-blend-mode'] = 'normal';
+        var layer_Kecamatan_Pringsewu_2 = new L.geoJson(json_Kecamatan_Pringsewu_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Kecamatan_Pringsewu_2',
+            layerName: 'layer_Kecamatan_Pringsewu_2',
+            pane: 'pane_Kecamatan_Pringsewu_2',
+            onEachFeature: pop_Kecamatan_Pringsewu_2,
+            style: style_Kecamatan_Pringsewu_2_0,
+        });
+        bounds_group.addLayer(layer_Kecamatan_Pringsewu_2);
+        map.addLayer(layer_Kecamatan_Pringsewu_2);
+        function pop_Jalan_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">OBJECTID</th>\
+                        <td>' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nm_Ruas</th>\
+                        <td>' + (feature.properties['Nm_Ruas'] !== null ? autolinker.link(feature.properties['Nm_Ruas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FUNGSI_JAL</th>\
+                        <td>' + (feature.properties['FUNGSI_JAL'] !== null ? autolinker.link(feature.properties['FUNGSI_JAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SUMBER</th>\
+                        <td>' + (feature.properties['SUMBER'] !== null ? autolinker.link(feature.properties['SUMBER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Leng'] !== null ? autolinker.link(feature.properties['Shape_Leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Jalan_3_0(feature) {
+            switch(String(feature.properties['Nm_Ruas'])) {
+                case 'Auto 2000 - Kantor Pertanian':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(144,219,98,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Banjar Rejo - Pamenang (Jl. Bumi Arab)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(70,77,206,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Banjar Rejo - Pamenang (Jl. Kebon Jati)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(210,44,96,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Banjar Rejo - Sinar Baru Timur (Jl. Kali Durian)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(43,233,170,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Banjar Rejo - Sinar Mulya (Jl. Tembilang Besi)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(195,100,232,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bayas - Batas Pesawaran (Jl. Mawar)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(187,220,66,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Belakang MTS - Gunung Kancil':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(139,234,204,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Blitarejo - Bukit (Jl. Blitarejo IV)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(64,145,216,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Blitarejo - Bukit (Jl. Blitarejo V)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(233,187,61,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Panjerejo (Jl. Pelita)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(227,100,146,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sawah (Jl. Sawah I)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(46,229,37,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sawah (Jl. Sawah II)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(213,216,47,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sawah (Jl. Sawah III)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(113,189,214,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sawah (Jl. Sawah IV)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(132,218,204,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sawah (Jl. Sawah V)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(199,121,215,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sawah (Jl. Sawah VI)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(88,197,237,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sp. Klaten (Jl. Raya Pemda)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(208,205,35,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sungai (Jl. Mantili I)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(213,44,84,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sungai (Jl. Mantili II)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(69,227,69,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sungai (Jl. Mantili III)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(98,212,214,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sungai (Jl. Mantili IV)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(207,38,12,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sungai (Jl. Mantili V)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(81,239,231,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bulukarto - Sungai (Jl. Mantili VI)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(21,191,217,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bumi Arum - Bumi Ayu':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(109,202,17,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bumi Ayu - Bumi Rejo':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(123,233,182,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bumi Ratu - Panutan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(56,222,216,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Bumi Rejo - Bumi Ayu':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(31,230,44,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Candi Retno - Kuto Pengasih':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(219,165,77,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Candi Retno - Sumber Rejo':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(231,197,30,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Candi Retno - Tanjung Anom':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(171,225,56,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Dusun 03 Pekon Banjar Rejo - Banjar Rejo Barat (Jl. Perintis)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(29,85,216,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Ganjaran - Bumi Rejo (Jl. Talang)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(209,127,152,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Ganjaran - Karang Sari':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(51,231,69,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Ganjaran - Pasir Ukir':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(50,221,173,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Gemah Ripah - Karang Sari':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(207,179,122,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Gugus Paud V - Ledeng':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(151,240,145,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Gumuk Mas - Bumi Ratu':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(57,218,154,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Gumuk Mas - Padang Rejo':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(208,189,112,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Gumuk Mas - Padang Rejo 2':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(163,237,45,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Gumuk Rejo - Karang Sari':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(186,124,214,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Gunung Kancil - Sp. Jl. Kartini':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(72,182,213,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jalan Ahmad Yani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(156,98,231,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jalan Desa Margakarya':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(202,67,159,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jalan Desa Margodadi':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(233,38,77,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jalan Jenderal Sudirman':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(142,239,23,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jalan Kesehatan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(98,48,238,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jalan KH. Gholib':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(94,137,213,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jalan Pujo Jatmiko':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(77,202,35,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jalur Dua Terminal - Podomoro':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(14,203,216,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl.  Pajaresuk  - Pertigaan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(181,211,59,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A. Yani - Jl. Gotong Royong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(29,237,25,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A. Yani - Jl. Pemuda':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(150,233,101,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A. Yani - Jl. Perusahaan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(166,227,97,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A. Yani - Rawa 2':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(202,111,212,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A. Yani - Rawa 3':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(47,201,85,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A. Yani - Rawa 5':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(213,103,189,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A. Yani - Rawa 6':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(105,236,93,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A. Yani - Sidoharjo':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(211,37,182,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A.Yani  - Sidoarjo':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(79,211,22,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A.Yani - Gunung Kancil':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(215,84,93,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A.Yani - Jalur Dua Terminal':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(97,228,104,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A.Yani - Jl. Kh. Dewantara':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(87,115,207,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. A.Yani - Pajaresuk':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(101,231,157,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Alpukat - Sp. Jl. Hi. Barjo Suwito':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(205,104,208,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Aries 1 - Gorong- Gorong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(235,152,29,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Asem - Makam':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(90,136,228,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Bambu - Sawah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(66,58,220,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Bata - Simpang':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(149,128,217,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Batu Kelir - Sp. Jl. Hi. Barjo Suwito':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(168,82,225,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Bayur - Sawah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(129,13,224,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Beringin 1 - Jl. Asri':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(195,109,224,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Beringin Raya - Jl. A. Yani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(139,229,183,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Bidan - Sawah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(204,53,189,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Bima - Jl. Panda':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(213,37,46,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Bumi Arum 1 - SDN':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(69,165,213,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Cempaka I - Sp. Jl. Melati III':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(98,216,175,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Cempaka IA - Sp. Jl. Cempaka IIIA':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(139,237,64,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Cempaka IIIA - Sp. Jl. Melati IIA':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(205,234,16,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Cempaka V - Sp. Jl. Melati IV':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(200,189,121,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Cokelat - Makam':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(182,206,49,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Dahlia I - Sp. Jl. Dahlia VI':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(225,192,109,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Dahlia IA - Sp. Jl. Cempaka III':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(126,236,31,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Dahlia II – Sp. Tanjung Anom':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(217,80,77,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Dahlia V - Jembatan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(186,240,116,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Dahlia VA - Sp. Jl. Dahlia III':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(216,127,97,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Danau':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(29,206,237,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Delima - Arah Sungai':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(234,116,129,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Diponogoro - Jl. A. Yani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(236,191,139,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Dirham - Sp. Jl. Jatiagung':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(88,221,166,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Dullah Yatin - Pertigaan Candi Retno':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(199,209,104,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Durian - Sp. Jl. Hi. Barjo Suwito':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(70,210,173,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Gereja - Bakso Ragil':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(19,230,96,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Gereja 1 - Rm. Padang':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(203,156,56,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Gotong Royong - Jl. Tangkil':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(201,113,105,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Gotong Royong - Kejaksaan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(224,206,103,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Gunung Agung - Jl. Gotong Royong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(133,74,206,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Gunung Batu - Gunung Batu':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(173,222,25,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Gunung Batu - Jl. Beringin Jaya':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(122,224,151,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. H. Abu Bakar - Pasar':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(227,157,95,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Harapan Bunda - Jl. Pringgodani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(45,123,200,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Harapan Bunda - Makam':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(101,231,53,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Hi. Barjo Suwito - Sp. Jl. Durian':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(56,87,200,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Hiu Latsirda - Waluyojati':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(98,170,229,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Jambu - Gudang':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(188,136,240,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Jauhari - Gorong-gorong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(18,95,219,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Jeruk - Kolam':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(230,164,97,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Johar - Jl. Pelita':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(86,237,16,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Johar 2 - SMK YPT':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(230,81,170,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kamboja - Kebun':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(57,102,214,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kaplingan - Sawah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(41,153,223,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Karawang - Sp. Jl. Karawang Sari':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(170,202,12,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Karet - Gorong-gorong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(123,135,207,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kartini - Jl. Harapan Bunda':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(155,112,235,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kecamatan ( Gumuk Rejo )':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(86,113,232,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kejaksaan - Jl. Tani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(217,122,232,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kejaksaan Pringsewu Barat - Jl. Gotong Royong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(226,108,35,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Ketobong - Sungai Way Bulog':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(73,56,202,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. KH. Dewantara - Pringgodani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(67,228,234,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kh. Gholib - Jl. Cempaka':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(57,200,136,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kh. Gholib - Jl. Kenanga 1':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(200,56,49,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kh. Gholib - Jl. Kenanga 2':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(143,147,239,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kh. Gholib - Jl. Kepunden':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(132,217,200,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kh. Gholib - Jl. Lumpur Jaya 1':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(216,110,53,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kh. Gholib - Jl. Nirwana':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(113,214,127,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kh. Gholib - Jl. Panda':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(152,89,239,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kh. Gholib - Jl. Satria':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(119,138,235,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. KH. Gholib - Jl. Tani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(70,87,220,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kh. Gholib - Jl. Way Semah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(97,17,225,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kh. Gholib - Makam':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(234,80,165,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kutilang - Bengkel Las':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(232,225,99,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Kyai Basar -  Sp.Tanjung Anom':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(232,57,185,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Makam - Makam':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(88,138,204,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Mangga - Sawah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(53,95,220,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Mawar 1 - Jl. Pelita':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(57,232,18,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Mawar 3 - Jl. Nangka':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(221,110,229,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Mawar I  - Sawah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(231,22,207,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Mawar V - Sawah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(159,100,210,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Mawar VI -Sp. Jl. Anggrek':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(124,108,211,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Mekar Sari - Jl. Kutilang':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(88,207,195,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Melati 1 - Jl. Pelita':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(152,120,221,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Melati 2 - Hotel Marisa':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(205,59,127,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Melati IA - Sp. Jl. Anggrek':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(236,25,130,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Merpati - Gorong-gorong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(229,112,103,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. MTS - Bukit':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(67,212,156,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Nangka 1 - Margakaya':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(23,188,206,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Nangka 2 - Jl. Nangka 1':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(150,225,97,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Nasional - Jl. Makam (Jl. Batako I)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(209,79,198,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Nasional - Jl. Wijaya Kusuma (Jl. Makam)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(91,80,205,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Olahraga - Jl. Kejaksaan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(82,231,134,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Olahraga - Makam':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(225,56,115,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Olahraga - Podomoro':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(238,66,89,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Pahlawan - Sp. Jl. Melati II (Jl. Suwardi)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(232,211,134,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Pajaresuk 4 - Pertigaan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(216,154,130,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Palapa - Gunung Kancil':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(204,97,82,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Panji - Jl. Kesehatan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(145,125,205,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Pasar - Jl. Gereja':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(117,212,128,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Pasir Luhur III - Jl. Pasir Luhur II (Jl. Terusan I)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(130,221,147,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Pasir Luhur IV - Sungai (Jl. Terusan II)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(14,14,226,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Pasir Luhur IV - Sungai (Jl. Terusan III)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(235,97,120,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. PAUD - Jl. A. Yani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(104,213,197,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Pelita - Alfamart':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(181,18,226,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Pemuda - Jl. H. Mustakim':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(29,225,32,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'JL. Perusahaan - Rawa 3':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(18,176,239,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Pringgodani - belakang Pasar Baru':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(206,203,123,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Pringgodani - Jl. Harapan Bunda':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(125,109,229,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Pringodani - Podosari':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(157,127,210,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Puskes - Way Semah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(203,187,38,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Raya Bulukerto - Sungai (Jl. Pasir Luhur I)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(70,154,219,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Raya Bulukerto - Sungai (Jl. Pasir Luhur II)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(27,231,187,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Raya Bulukerto - Sungai Jl. Pasir Luhur IV)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(45,230,215,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Raya Lampu Merah - Pardasuka (Propinsi) - Makam':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(27,114,208,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Rejosari 1 - Gorong-gorong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(70,165,209,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Rukun - STKIP':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(204,51,94,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Sarbani - Sp. Jl. Poros Ganjaran':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(122,17,234,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Sawit - Sawah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(158,43,224,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. SMK PGRI - SMPN 2 Pringombo':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(217,221,114,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Sultan Agung - Pertigaan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(218,154,71,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Sumber Waras - Rejosari':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(232,126,216,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Tani - Nirwana':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(235,79,155,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Tani Dalem - Kejaksaan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(216,151,121,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Tugu Tua - Sp. Gajaran':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(58,207,12,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Waluyojati - Karangsari':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(235,23,164,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl. Wismarini - STMIK Pringsewu':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(67,200,169,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jl.Pelita - Nirwana':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(94,200,119,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Karang Sari - Candi Retno (Jembatan)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(149,60,217,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Karang Sari - Kuto Pengasih':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(229,138,27,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Karang Sari - Perempatan Tanjung anom':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(77,74,240,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Karang Sari 1 - Karang Sari 3':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(94,68,201,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Lapangan Bola - Jl. A. Yani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(134,239,77,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'M. Yusuf - Sumber Waras 2':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(204,195,94,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'M. Yusuf - Sumber Waras 3':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(97,181,230,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'M. Yusuf - Sumber Waras 4':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(85,75,216,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Masjid Al-Huda - Jl. Margakaya':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(225,82,96,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'MTS - Gunung Kancil':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(219,70,222,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pagelaran - Margodadi':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(216,115,72,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pager Sari - Kecamatan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(221,103,197,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pajar Esuk - Jl. Tani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(103,176,225,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pajaresuk - Jl. Gotong Royong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(145,218,76,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pajaresuk - Jl. Tani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(148,49,210,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pajaresuk - Kejaksaan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(32,239,73,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pajaresuk - Waluyojati':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(228,15,129,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pajaresuk 2 - Pertigaan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(227,92,222,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pajeresuk - Bumi Arum':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(87,96,228,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pandan Sari Selatan - Sukoharjo IV (Jl. Kapten Silitonga 2)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(211,97,179,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Panjerejo - Bendungan (Jl. Bendungan II)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(224,27,178,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Panjerejo - Bendungan (Jl. Kepudang)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(63,125,212,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Panjerejo - Bendungan (Jl. SDN 1)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(227,112,183,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Panjerejo - Bendungan (Jl. Tani)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(219,43,210,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Panjerejo - Parerejo (Jl. Raya Blitarejo)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(19,236,88,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pasar - Jl. Kartini':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(218,68,71,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pasar Pajaresuk - Masjid Nurul Huda':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(172,223,70,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pasar Tempel Podomoro - Jl. Olahraga':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(175,39,225,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Penginapan Srikandi - Sawah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(102,202,222,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Peringsewu Utara - Yudistira':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(171,224,91,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Pertigaan SMK YPT - Margakaya':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(192,115,230,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Perusahaan - Sawah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(228,128,57,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Podomoro - Jl. Arafah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(139,219,119,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Podomoro - Jl. Melati':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(209,110,18,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Podomoro - Jl. Pemuda':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(197,52,222,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Podomoro - Komplek Pemkab Pringsewu':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(204,46,115,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Podomoro - Pemda (Jl. Sampan)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(210,165,17,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Podomoro - Podomoro Indah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(200,159,82,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Podomoro Indah - Podosari':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(119,99,208,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Podosari - Podomoro Indah':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(140,231,182,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Polsek - Kh. Gholib (Jl. Veteran)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(100,235,82,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Polsek - STKIP':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(202,211,103,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Rawa 2 - Rawa 4':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(237,157,97,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Rejosari  - Losmen Grand Wisata':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(96,209,207,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Rejosari - Bumi Arum':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(209,73,31,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Rejosari - Gorong-gorong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(229,93,227,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Rejosari - Pemancingan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(93,200,76,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Rejosari - Podomoro':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(211,52,92,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Rejosari - Podorejo':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(170,218,39,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'SDN 1 Sidoharjo - Sunai way Bulog':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(231,96,63,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sekolah MAN - Gorong-gorong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(136,107,204,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sidoarjo - Aries':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(109,225,167,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sidoarjo - Jl. Raya Pemda (Jl. Pemda I)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(227,155,113,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sidoharjo - Podomoro':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(50,224,120,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sidoharjo - Pringombo':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(236,80,80,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Simpang Sari - Podosari':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(130,176,232,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sinar Baru Timur - Bumi Arum (Jl. Ekonomi Pertanian)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(80,213,102,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'SMPN 3 Pringsewu - Gorong- Gorong':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(215,223,71,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sp. Klaten - Pemda (Jl. Raya Pemda)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(229,17,141,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'STKIP - Jl. Tani':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(25,213,81,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sukamulya - Banjar Rejo (Jl. Asmo Suwito)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(145,225,129,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sukoharjo I - Sukamulya (Jl. Raya Sukoharjo I)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(100,186,207,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sukoharjo I - Sukoharjo IV':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(223,124,104,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sukoharjo II - Sukoharjo IV (Jl. Mardiyono)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(190,80,218,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sukoharjo II - Sukoharjo IV (Jl. Silitonga)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(203,57,152,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sukoharjo IV - Kampung Jogja (Jl. Kolonel Silitonga)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(211,122,102,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Sukoharjo IV - Pangung Rejo':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(218,73,99,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Surya Asih - SD 2 Pringombo':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(54,202,116,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Tanjung Anom - Candi Retno':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(226,99,238,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Terminal - Podomoro':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(167,238,35,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Terminal - Tugu':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(201,17,93,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Waluyojati - Jl. Harapan Bunda':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(238,14,104,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Wates - Panjerejo (Jl. Wijaya Kusuma)':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(67,84,235,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Way Sema - Bumi ratu':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(41,211,191,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Way Sema - Panutan':
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(201,226,137,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_Jalan_3',
+                opacity: 1,
+                color: 'rgba(111,198,206,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Jalan_3');
+        map.getPane('pane_Jalan_3').style.zIndex = 403;
+        map.getPane('pane_Jalan_3').style['mix-blend-mode'] = 'normal';
+        var layer_Jalan_3 = new L.geoJson(json_Jalan_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Jalan_3',
+            layerName: 'layer_Jalan_3',
+            pane: 'pane_Jalan_3',
+            onEachFeature: pop_Jalan_3,
+            style: style_Jalan_3_0,
+        });
+        bounds_group.addLayer(layer_Jalan_3);
+        map.addLayer(layer_Jalan_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Jalan<br /><table><tr><td style="text-align: center;"><img src="legend/Jalan_3_Auto2000KantorPertanian0.png" /></td><td>Auto 2000 - Kantor Pertanian</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BanjarRejoPamenangJlBumiArab1.png" /></td><td>Banjar Rejo - Pamenang (Jl. Bumi Arab)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BanjarRejoPamenangJlKebonJati2.png" /></td><td>Banjar Rejo - Pamenang (Jl. Kebon Jati)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BanjarRejoSinarBaruTimurJlKaliDurian3.png" /></td><td>Banjar Rejo - Sinar Baru Timur (Jl. Kali Durian)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BanjarRejoSinarMulyaJlTembilangBesi4.png" /></td><td>Banjar Rejo - Sinar Mulya (Jl. Tembilang Besi)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BayasBatasPesawaranJlMawar5.png" /></td><td>Bayas - Batas Pesawaran (Jl. Mawar)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BelakangMTSGunungKancil6.png" /></td><td>Belakang MTS - Gunung Kancil</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BlitarejoBukitJlBlitarejoIV7.png" /></td><td>Blitarejo - Bukit (Jl. Blitarejo IV)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BlitarejoBukitJlBlitarejoV8.png" /></td><td>Blitarejo - Bukit (Jl. Blitarejo V)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoPanjerejoJlPelita9.png" /></td><td>Bulukarto - Panjerejo (Jl. Pelita)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSawahJlSawahI10.png" /></td><td>Bulukarto - Sawah (Jl. Sawah I)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSawahJlSawahII11.png" /></td><td>Bulukarto - Sawah (Jl. Sawah II)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSawahJlSawahIII12.png" /></td><td>Bulukarto - Sawah (Jl. Sawah III)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSawahJlSawahIV13.png" /></td><td>Bulukarto - Sawah (Jl. Sawah IV)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSawahJlSawahV14.png" /></td><td>Bulukarto - Sawah (Jl. Sawah V)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSawahJlSawahVI15.png" /></td><td>Bulukarto - Sawah (Jl. Sawah VI)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSpKlatenJlRayaPemda16.png" /></td><td>Bulukarto - Sp. Klaten (Jl. Raya Pemda)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSungaiJlMantiliI17.png" /></td><td>Bulukarto - Sungai (Jl. Mantili I)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSungaiJlMantiliII18.png" /></td><td>Bulukarto - Sungai (Jl. Mantili II)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSungaiJlMantiliIII19.png" /></td><td>Bulukarto - Sungai (Jl. Mantili III)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSungaiJlMantiliIV20.png" /></td><td>Bulukarto - Sungai (Jl. Mantili IV)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSungaiJlMantiliV21.png" /></td><td>Bulukarto - Sungai (Jl. Mantili V)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BulukartoSungaiJlMantiliVI22.png" /></td><td>Bulukarto - Sungai (Jl. Mantili VI)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BumiArumBumiAyu23.png" /></td><td>Bumi Arum - Bumi Ayu</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BumiAyuBumiRejo24.png" /></td><td>Bumi Ayu - Bumi Rejo</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BumiRatuPanutan25.png" /></td><td>Bumi Ratu - Panutan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_BumiRejoBumiAyu26.png" /></td><td>Bumi Rejo - Bumi Ayu</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_CandiRetnoKutoPengasih27.png" /></td><td>Candi Retno - Kuto Pengasih</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_CandiRetnoSumberRejo28.png" /></td><td>Candi Retno - Sumber Rejo</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_CandiRetnoTanjungAnom29.png" /></td><td>Candi Retno - Tanjung Anom</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_Dusun03PekonBanjarRejoBanjarRejoBaratJlPerintis30.png" /></td><td>Dusun 03 Pekon Banjar Rejo - Banjar Rejo Barat (Jl. Perintis)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_GanjaranBumiRejoJlTalang31.png" /></td><td>Ganjaran - Bumi Rejo (Jl. Talang)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_GanjaranKarangSari32.png" /></td><td>Ganjaran - Karang Sari</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_GanjaranPasirUkir33.png" /></td><td>Ganjaran - Pasir Ukir</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_GemahRipahKarangSari34.png" /></td><td>Gemah Ripah - Karang Sari</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_GugusPaudVLedeng35.png" /></td><td>Gugus Paud V - Ledeng</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_GumukMasBumiRatu36.png" /></td><td>Gumuk Mas - Bumi Ratu</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_GumukMasPadangRejo37.png" /></td><td>Gumuk Mas - Padang Rejo</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_GumukMasPadangRejo238.png" /></td><td>Gumuk Mas - Padang Rejo 2</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_GumukRejoKarangSari39.png" /></td><td>Gumuk Rejo - Karang Sari</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_GunungKancilSpJlKartini40.png" /></td><td>Gunung Kancil - Sp. Jl. Kartini</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JalanAhmadYani41.png" /></td><td>Jalan Ahmad Yani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JalanDesaMargakarya42.png" /></td><td>Jalan Desa Margakarya</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JalanDesaMargodadi43.png" /></td><td>Jalan Desa Margodadi</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JalanJenderalSudirman44.png" /></td><td>Jalan Jenderal Sudirman</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JalanKesehatan45.png" /></td><td>Jalan Kesehatan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JalanKHGholib46.png" /></td><td>Jalan KH. Gholib</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JalanPujoJatmiko47.png" /></td><td>Jalan Pujo Jatmiko</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JalurDuaTerminalPodomoro48.png" /></td><td>Jalur Dua Terminal - Podomoro</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPajaresukPertigaan49.png" /></td><td>Jl.  Pajaresuk  - Pertigaan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniJlGotongRoyong50.png" /></td><td>Jl. A. Yani - Jl. Gotong Royong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniJlPemuda51.png" /></td><td>Jl. A. Yani - Jl. Pemuda</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniJlPerusahaan52.png" /></td><td>Jl. A. Yani - Jl. Perusahaan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniRawa253.png" /></td><td>Jl. A. Yani - Rawa 2</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniRawa354.png" /></td><td>Jl. A. Yani - Rawa 3</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniRawa555.png" /></td><td>Jl. A. Yani - Rawa 5</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniRawa656.png" /></td><td>Jl. A. Yani - Rawa 6</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniSidoharjo57.png" /></td><td>Jl. A. Yani - Sidoharjo</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniSidoarjo58.png" /></td><td>Jl. A.Yani  - Sidoarjo</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniGunungKancil59.png" /></td><td>Jl. A.Yani - Gunung Kancil</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniJalurDuaTerminal60.png" /></td><td>Jl. A.Yani - Jalur Dua Terminal</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniJlKhDewantara61.png" /></td><td>Jl. A.Yani - Jl. Kh. Dewantara</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAYaniPajaresuk62.png" /></td><td>Jl. A.Yani - Pajaresuk</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAlpukatSpJlHiBarjoSuwito63.png" /></td><td>Jl. Alpukat - Sp. Jl. Hi. Barjo Suwito</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAries1GorongGorong64.png" /></td><td>Jl. Aries 1 - Gorong- Gorong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlAsemMakam65.png" /></td><td>Jl. Asem - Makam</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlBambuSawah66.png" /></td><td>Jl. Bambu - Sawah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlBataSimpang67.png" /></td><td>Jl. Bata - Simpang</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlBatuKelirSpJlHiBarjoSuwito68.png" /></td><td>Jl. Batu Kelir - Sp. Jl. Hi. Barjo Suwito</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlBayurSawah69.png" /></td><td>Jl. Bayur - Sawah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlBeringin1JlAsri70.png" /></td><td>Jl. Beringin 1 - Jl. Asri</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlBeringinRayaJlAYani71.png" /></td><td>Jl. Beringin Raya - Jl. A. Yani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlBidanSawah72.png" /></td><td>Jl. Bidan - Sawah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlBimaJlPanda73.png" /></td><td>Jl. Bima - Jl. Panda</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlBumiArum1SDN74.png" /></td><td>Jl. Bumi Arum 1 - SDN</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlCempakaISpJlMelatiIII75.png" /></td><td>Jl. Cempaka I - Sp. Jl. Melati III</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlCempakaIASpJlCempakaIIIA76.png" /></td><td>Jl. Cempaka IA - Sp. Jl. Cempaka IIIA</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlCempakaIIIASpJlMelatiIIA77.png" /></td><td>Jl. Cempaka IIIA - Sp. Jl. Melati IIA</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlCempakaVSpJlMelatiIV78.png" /></td><td>Jl. Cempaka V - Sp. Jl. Melati IV</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlCokelatMakam79.png" /></td><td>Jl. Cokelat - Makam</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlDahliaISpJlDahliaVI80.png" /></td><td>Jl. Dahlia I - Sp. Jl. Dahlia VI</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlDahliaIASpJlCempakaIII81.png" /></td><td>Jl. Dahlia IA - Sp. Jl. Cempaka III</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlDahliaIISpTanjungAnom82.png" /></td><td>Jl. Dahlia II – Sp. Tanjung Anom</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlDahliaVJembatan83.png" /></td><td>Jl. Dahlia V - Jembatan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlDahliaVASpJlDahliaIII84.png" /></td><td>Jl. Dahlia VA - Sp. Jl. Dahlia III</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlDanau85.png" /></td><td>Jl. Danau</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlDelimaArahSungai86.png" /></td><td>Jl. Delima - Arah Sungai</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlDiponogoroJlAYani87.png" /></td><td>Jl. Diponogoro - Jl. A. Yani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlDirhamSpJlJatiagung88.png" /></td><td>Jl. Dirham - Sp. Jl. Jatiagung</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlDullahYatinPertigaanCandiRetno89.png" /></td><td>Jl. Dullah Yatin - Pertigaan Candi Retno</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlDurianSpJlHiBarjoSuwito90.png" /></td><td>Jl. Durian - Sp. Jl. Hi. Barjo Suwito</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlGerejaBaksoRagil91.png" /></td><td>Jl. Gereja - Bakso Ragil</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlGereja1RmPadang92.png" /></td><td>Jl. Gereja 1 - Rm. Padang</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlGotongRoyongJlTangkil93.png" /></td><td>Jl. Gotong Royong - Jl. Tangkil</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlGotongRoyongKejaksaan94.png" /></td><td>Jl. Gotong Royong - Kejaksaan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlGunungAgungJlGotongRoyong95.png" /></td><td>Jl. Gunung Agung - Jl. Gotong Royong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlGunungBatuGunungBatu96.png" /></td><td>Jl. Gunung Batu - Gunung Batu</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlGunungBatuJlBeringinJaya97.png" /></td><td>Jl. Gunung Batu - Jl. Beringin Jaya</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlHAbuBakarPasar98.png" /></td><td>Jl. H. Abu Bakar - Pasar</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlHarapanBundaJlPringgodani99.png" /></td><td>Jl. Harapan Bunda - Jl. Pringgodani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlHarapanBundaMakam100.png" /></td><td>Jl. Harapan Bunda - Makam</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlHiBarjoSuwitoSpJlDurian101.png" /></td><td>Jl. Hi. Barjo Suwito - Sp. Jl. Durian</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlHiuLatsirdaWaluyojati102.png" /></td><td>Jl. Hiu Latsirda - Waluyojati</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlJambuGudang103.png" /></td><td>Jl. Jambu - Gudang</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlJauhariGoronggorong104.png" /></td><td>Jl. Jauhari - Gorong-gorong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlJerukKolam105.png" /></td><td>Jl. Jeruk - Kolam</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlJoharJlPelita106.png" /></td><td>Jl. Johar - Jl. Pelita</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlJohar2SMKYPT107.png" /></td><td>Jl. Johar 2 - SMK YPT</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKambojaKebun108.png" /></td><td>Jl. Kamboja - Kebun</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKaplinganSawah109.png" /></td><td>Jl. Kaplingan - Sawah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKarawangSpJlKarawangSari110.png" /></td><td>Jl. Karawang - Sp. Jl. Karawang Sari</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKaretGoronggorong111.png" /></td><td>Jl. Karet - Gorong-gorong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKartiniJlHarapanBunda112.png" /></td><td>Jl. Kartini - Jl. Harapan Bunda</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKecamatanGumukRejo113.png" /></td><td>Jl. Kecamatan ( Gumuk Rejo )</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKejaksaanJlTani114.png" /></td><td>Jl. Kejaksaan - Jl. Tani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKejaksaanPringsewuBaratJlGotongRoyong115.png" /></td><td>Jl. Kejaksaan Pringsewu Barat - Jl. Gotong Royong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKetobongSungaiWayBulog116.png" /></td><td>Jl. Ketobong - Sungai Way Bulog</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKHDewantaraPringgodani117.png" /></td><td>Jl. KH. Dewantara - Pringgodani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKhGholibJlCempaka118.png" /></td><td>Jl. Kh. Gholib - Jl. Cempaka</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKhGholibJlKenanga1119.png" /></td><td>Jl. Kh. Gholib - Jl. Kenanga 1</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKhGholibJlKenanga2120.png" /></td><td>Jl. Kh. Gholib - Jl. Kenanga 2</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKhGholibJlKepunden121.png" /></td><td>Jl. Kh. Gholib - Jl. Kepunden</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKhGholibJlLumpurJaya1122.png" /></td><td>Jl. Kh. Gholib - Jl. Lumpur Jaya 1</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKhGholibJlNirwana123.png" /></td><td>Jl. Kh. Gholib - Jl. Nirwana</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKhGholibJlPanda124.png" /></td><td>Jl. Kh. Gholib - Jl. Panda</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKhGholibJlSatria125.png" /></td><td>Jl. Kh. Gholib - Jl. Satria</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKHGholibJlTani126.png" /></td><td>Jl. KH. Gholib - Jl. Tani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKhGholibJlWaySemah127.png" /></td><td>Jl. Kh. Gholib - Jl. Way Semah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKhGholibMakam128.png" /></td><td>Jl. Kh. Gholib - Makam</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKutilangBengkelLas129.png" /></td><td>Jl. Kutilang - Bengkel Las</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlKyaiBasarSpTanjungAnom130.png" /></td><td>Jl. Kyai Basar -  Sp.Tanjung Anom</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMakamMakam131.png" /></td><td>Jl. Makam - Makam</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlManggaSawah132.png" /></td><td>Jl. Mangga - Sawah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMawar1JlPelita133.png" /></td><td>Jl. Mawar 1 - Jl. Pelita</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMawar3JlNangka134.png" /></td><td>Jl. Mawar 3 - Jl. Nangka</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMawarISawah135.png" /></td><td>Jl. Mawar I  - Sawah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMawarVSawah136.png" /></td><td>Jl. Mawar V - Sawah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMawarVISpJlAnggrek137.png" /></td><td>Jl. Mawar VI -Sp. Jl. Anggrek</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMekarSariJlKutilang138.png" /></td><td>Jl. Mekar Sari - Jl. Kutilang</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMelati1JlPelita139.png" /></td><td>Jl. Melati 1 - Jl. Pelita</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMelati2HotelMarisa140.png" /></td><td>Jl. Melati 2 - Hotel Marisa</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMelatiIASpJlAnggrek141.png" /></td><td>Jl. Melati IA - Sp. Jl. Anggrek</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMerpatiGoronggorong142.png" /></td><td>Jl. Merpati - Gorong-gorong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlMTSBukit143.png" /></td><td>Jl. MTS - Bukit</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlNangka1Margakaya144.png" /></td><td>Jl. Nangka 1 - Margakaya</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlNangka2JlNangka1145.png" /></td><td>Jl. Nangka 2 - Jl. Nangka 1</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlNasionalJlMakamJlBatakoI146.png" /></td><td>Jl. Nasional - Jl. Makam (Jl. Batako I)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlNasionalJlWijayaKusumaJlMakam147.png" /></td><td>Jl. Nasional - Jl. Wijaya Kusuma (Jl. Makam)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlOlahragaJlKejaksaan148.png" /></td><td>Jl. Olahraga - Jl. Kejaksaan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlOlahragaMakam149.png" /></td><td>Jl. Olahraga - Makam</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlOlahragaPodomoro150.png" /></td><td>Jl. Olahraga - Podomoro</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPahlawanSpJlMelatiIIJlSuwardi151.png" /></td><td>Jl. Pahlawan - Sp. Jl. Melati II (Jl. Suwardi)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPajaresuk4Pertigaan152.png" /></td><td>Jl. Pajaresuk 4 - Pertigaan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPalapaGunungKancil153.png" /></td><td>Jl. Palapa - Gunung Kancil</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPanjiJlKesehatan154.png" /></td><td>Jl. Panji - Jl. Kesehatan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPasarJlGereja155.png" /></td><td>Jl. Pasar - Jl. Gereja</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPasirLuhurIIIJlPasirLuhurIIJlTerusanI156.png" /></td><td>Jl. Pasir Luhur III - Jl. Pasir Luhur II (Jl. Terusan I)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPasirLuhurIVSungaiJlTerusanII157.png" /></td><td>Jl. Pasir Luhur IV - Sungai (Jl. Terusan II)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPasirLuhurIVSungaiJlTerusanIII158.png" /></td><td>Jl. Pasir Luhur IV - Sungai (Jl. Terusan III)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPAUDJlAYani159.png" /></td><td>Jl. PAUD - Jl. A. Yani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPelitaAlfamart160.png" /></td><td>Jl. Pelita - Alfamart</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPemudaJlHMustakim161.png" /></td><td>Jl. Pemuda - Jl. H. Mustakim</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JLPerusahaanRawa3162.png" /></td><td>JL. Perusahaan - Rawa 3</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPringgodanibelakangPasarBaru163.png" /></td><td>Jl. Pringgodani - belakang Pasar Baru</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPringgodaniJlHarapanBunda164.png" /></td><td>Jl. Pringgodani - Jl. Harapan Bunda</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPringodaniPodosari165.png" /></td><td>Jl. Pringodani - Podosari</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPuskesWaySemah166.png" /></td><td>Jl. Puskes - Way Semah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlRayaBulukertoSungaiJlPasirLuhurI167.png" /></td><td>Jl. Raya Bulukerto - Sungai (Jl. Pasir Luhur I)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlRayaBulukertoSungaiJlPasirLuhurII168.png" /></td><td>Jl. Raya Bulukerto - Sungai (Jl. Pasir Luhur II)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlRayaBulukertoSungaiJlPasirLuhurIV169.png" /></td><td>Jl. Raya Bulukerto - Sungai Jl. Pasir Luhur IV)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlRayaLampuMerahPardasukaPropinsiMakam170.png" /></td><td>Jl. Raya Lampu Merah - Pardasuka (Propinsi) - Makam</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlRejosari1Goronggorong171.png" /></td><td>Jl. Rejosari 1 - Gorong-gorong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlRukunSTKIP172.png" /></td><td>Jl. Rukun - STKIP</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlSarbaniSpJlPorosGanjaran173.png" /></td><td>Jl. Sarbani - Sp. Jl. Poros Ganjaran</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlSawitSawah174.png" /></td><td>Jl. Sawit - Sawah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlSMKPGRISMPN2Pringombo175.png" /></td><td>Jl. SMK PGRI - SMPN 2 Pringombo</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlSultanAgungPertigaan176.png" /></td><td>Jl. Sultan Agung - Pertigaan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlSumberWarasRejosari177.png" /></td><td>Jl. Sumber Waras - Rejosari</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlTaniNirwana178.png" /></td><td>Jl. Tani - Nirwana</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlTaniDalemKejaksaan179.png" /></td><td>Jl. Tani Dalem - Kejaksaan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlTuguTuaSpGajaran180.png" /></td><td>Jl. Tugu Tua - Sp. Gajaran</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlWaluyojatiKarangsari181.png" /></td><td>Jl. Waluyojati - Karangsari</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlWismariniSTMIKPringsewu182.png" /></td><td>Jl. Wismarini - STMIK Pringsewu</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_JlPelitaNirwana183.png" /></td><td>Jl.Pelita - Nirwana</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_KarangSariCandiRetnoJembatan184.png" /></td><td>Karang Sari - Candi Retno (Jembatan)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_KarangSariKutoPengasih185.png" /></td><td>Karang Sari - Kuto Pengasih</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_KarangSariPerempatanTanjunganom186.png" /></td><td>Karang Sari - Perempatan Tanjung anom</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_KarangSari1KarangSari3187.png" /></td><td>Karang Sari 1 - Karang Sari 3</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_LapanganBolaJlAYani188.png" /></td><td>Lapangan Bola - Jl. A. Yani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_MYusufSumberWaras2189.png" /></td><td>M. Yusuf - Sumber Waras 2</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_MYusufSumberWaras3190.png" /></td><td>M. Yusuf - Sumber Waras 3</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_MYusufSumberWaras4191.png" /></td><td>M. Yusuf - Sumber Waras 4</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_MasjidAlHudaJlMargakaya192.png" /></td><td>Masjid Al-Huda - Jl. Margakaya</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_MTSGunungKancil193.png" /></td><td>MTS - Gunung Kancil</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PagelaranMargodadi194.png" /></td><td>Pagelaran - Margodadi</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PagerSariKecamatan195.png" /></td><td>Pager Sari - Kecamatan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PajarEsukJlTani196.png" /></td><td>Pajar Esuk - Jl. Tani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PajaresukJlGotongRoyong197.png" /></td><td>Pajaresuk - Jl. Gotong Royong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PajaresukJlTani198.png" /></td><td>Pajaresuk - Jl. Tani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PajaresukKejaksaan199.png" /></td><td>Pajaresuk - Kejaksaan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PajaresukWaluyojati200.png" /></td><td>Pajaresuk - Waluyojati</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_Pajaresuk2Pertigaan201.png" /></td><td>Pajaresuk 2 - Pertigaan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PajeresukBumiArum202.png" /></td><td>Pajeresuk - Bumi Arum</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PandanSariSelatanSukoharjoIVJlKaptenSilitonga2203.png" /></td><td>Pandan Sari Selatan - Sukoharjo IV (Jl. Kapten Silitonga 2)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PanjerejoBendunganJlBendunganII204.png" /></td><td>Panjerejo - Bendungan (Jl. Bendungan II)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PanjerejoBendunganJlKepudang205.png" /></td><td>Panjerejo - Bendungan (Jl. Kepudang)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PanjerejoBendunganJlSDN1206.png" /></td><td>Panjerejo - Bendungan (Jl. SDN 1)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PanjerejoBendunganJlTani207.png" /></td><td>Panjerejo - Bendungan (Jl. Tani)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PanjerejoParerejoJlRayaBlitarejo208.png" /></td><td>Panjerejo - Parerejo (Jl. Raya Blitarejo)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PasarJlKartini209.png" /></td><td>Pasar - Jl. Kartini</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PasarPajaresukMasjidNurulHuda210.png" /></td><td>Pasar Pajaresuk - Masjid Nurul Huda</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PasarTempelPodomoroJlOlahraga211.png" /></td><td>Pasar Tempel Podomoro - Jl. Olahraga</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PenginapanSrikandiSawah212.png" /></td><td>Penginapan Srikandi - Sawah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PeringsewuUtaraYudistira213.png" /></td><td>Peringsewu Utara - Yudistira</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PertigaanSMKYPTMargakaya214.png" /></td><td>Pertigaan SMK YPT - Margakaya</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PerusahaanSawah215.png" /></td><td>Perusahaan - Sawah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PodomoroJlArafah216.png" /></td><td>Podomoro - Jl. Arafah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PodomoroJlMelati217.png" /></td><td>Podomoro - Jl. Melati</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PodomoroJlPemuda218.png" /></td><td>Podomoro - Jl. Pemuda</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PodomoroKomplekPemkabPringsewu219.png" /></td><td>Podomoro - Komplek Pemkab Pringsewu</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PodomoroPemdaJlSampan220.png" /></td><td>Podomoro - Pemda (Jl. Sampan)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PodomoroPodomoroIndah221.png" /></td><td>Podomoro - Podomoro Indah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PodomoroIndahPodosari222.png" /></td><td>Podomoro Indah - Podosari</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PodosariPodomoroIndah223.png" /></td><td>Podosari - Podomoro Indah</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PolsekKhGholibJlVeteran224.png" /></td><td>Polsek - Kh. Gholib (Jl. Veteran)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_PolsekSTKIP225.png" /></td><td>Polsek - STKIP</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_Rawa2Rawa4226.png" /></td><td>Rawa 2 - Rawa 4</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_RejosariLosmenGrandWisata227.png" /></td><td>Rejosari  - Losmen Grand Wisata</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_RejosariBumiArum228.png" /></td><td>Rejosari - Bumi Arum</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_RejosariGoronggorong229.png" /></td><td>Rejosari - Gorong-gorong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_RejosariPemancingan230.png" /></td><td>Rejosari - Pemancingan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_RejosariPodomoro231.png" /></td><td>Rejosari - Podomoro</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_RejosariPodorejo232.png" /></td><td>Rejosari - Podorejo</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SDN1SidoharjoSunaiwayBulog233.png" /></td><td>SDN 1 Sidoharjo - Sunai way Bulog</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SekolahMANGoronggorong234.png" /></td><td>Sekolah MAN - Gorong-gorong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SidoarjoAries235.png" /></td><td>Sidoarjo - Aries</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SidoarjoJlRayaPemdaJlPemdaI236.png" /></td><td>Sidoarjo - Jl. Raya Pemda (Jl. Pemda I)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SidoharjoPodomoro237.png" /></td><td>Sidoharjo - Podomoro</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SidoharjoPringombo238.png" /></td><td>Sidoharjo - Pringombo</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SimpangSariPodosari239.png" /></td><td>Simpang Sari - Podosari</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SinarBaruTimurBumiArumJlEkonomiPertanian240.png" /></td><td>Sinar Baru Timur - Bumi Arum (Jl. Ekonomi Pertanian)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SMPN3PringsewuGorongGorong241.png" /></td><td>SMPN 3 Pringsewu - Gorong- Gorong</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SpKlatenPemdaJlRayaPemda242.png" /></td><td>Sp. Klaten - Pemda (Jl. Raya Pemda)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_STKIPJlTani243.png" /></td><td>STKIP - Jl. Tani</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SukamulyaBanjarRejoJlAsmoSuwito244.png" /></td><td>Sukamulya - Banjar Rejo (Jl. Asmo Suwito)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SukoharjoISukamulyaJlRayaSukoharjoI245.png" /></td><td>Sukoharjo I - Sukamulya (Jl. Raya Sukoharjo I)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SukoharjoISukoharjoIV246.png" /></td><td>Sukoharjo I - Sukoharjo IV</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SukoharjoIISukoharjoIVJlMardiyono247.png" /></td><td>Sukoharjo II - Sukoharjo IV (Jl. Mardiyono)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SukoharjoIISukoharjoIVJlSilitonga248.png" /></td><td>Sukoharjo II - Sukoharjo IV (Jl. Silitonga)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SukoharjoIVKampungJogjaJlKolonelSilitonga249.png" /></td><td>Sukoharjo IV - Kampung Jogja (Jl. Kolonel Silitonga)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SukoharjoIVPangungRejo250.png" /></td><td>Sukoharjo IV - Pangung Rejo</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_SuryaAsihSD2Pringombo251.png" /></td><td>Surya Asih - SD 2 Pringombo</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_TanjungAnomCandiRetno252.png" /></td><td>Tanjung Anom - Candi Retno</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_TerminalPodomoro253.png" /></td><td>Terminal - Podomoro</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_TerminalTugu254.png" /></td><td>Terminal - Tugu</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_WaluyojatiJlHarapanBunda255.png" /></td><td>Waluyojati - Jl. Harapan Bunda</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_WatesPanjerejoJlWijayaKusuma256.png" /></td><td>Wates - Panjerejo (Jl. Wijaya Kusuma)</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_WaySemaBumiratu257.png" /></td><td>Way Sema - Bumi ratu</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_WaySemaPanutan258.png" /></td><td>Way Sema - Panutan</td></tr><tr><td style="text-align: center;"><img src="legend/Jalan_3_259.png" /></td><td></td></tr></table>': layer_Jalan_3,'<img src="legend/Kecamatan_Pringsewu_2.png" /> Kecamatan_Pringsewu': layer_Kecamatan_Pringsewu_2,'<img src="legend/Kabupaten_Pringsewu_1.png" /> Kabupaten_Pringsewu': layer_Kabupaten_Pringsewu_1,"Google Satellite": layer_GoogleSatellite_0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
